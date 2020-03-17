@@ -1163,7 +1163,7 @@ class NewPrinterGUI(GtkGUI):
                 if (self.device.id and
                     not self.device.type in ("socket", "lpd", "ipp",
                                              "http", "https", "bluetooth")):
-                    name = "%s %s" % (self.device.id_dict["MFG"], 
+                    name = "%s %s" % (self.device.id_dict["MFG"],
                                       self.device.id_dict["MDL"])
             except:
                 nonfatalException ()
@@ -2382,7 +2382,7 @@ class NewPrinterGUI(GtkGUI):
                     else:
                         device2.uri = "delete"
         devices = [x for x in devices if x.uri not in ("hp", "hpfax",
-                                                       "hal", "beh", "smb", 
+                                                       "hal", "beh", "smb",
                                                        "scsi", "http", "bjnp",
                                                        "delete")]
         newdevices = []
@@ -4236,7 +4236,7 @@ class NewPrinterGUI(GtkGUI):
         if isinstance(ppd, str):
             self.cups._begin_operation (_("fetching PPD"))
             try:
-                if ppd != "raw":
+                if ppd != "raw" and ppd != "everywhere":
                     f = self.cups.getServerPPD(ppd)
                     ppd = cups.PPD(f)
                     os.unlink(f)

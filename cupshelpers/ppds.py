@@ -397,8 +397,25 @@ class PPDs:
 
             to_remove.append (ppdname)
 
+        # Remove the obsolete Generic PPD file
+        to_remove.append('drv:///cupsfilters.drv/pwgrast.ppd')
+
         for ppdname in to_remove:
             del self.ppds[ppdname]
+
+        # Add Generic Driverless IPP Printer in the list of available
+        # makes and models.
+        if not 'everywhere' in self.ppds:
+            self.ppds['everywhere'] = {
+                'ppd-natural-language': 'en',
+                'ppd-make': 'Driverless IPP Printer',
+                'ppd-make-and-model': 'Generic Driverless IPP Printer',
+                'ppd-device-id': '',
+                'ppd-product': '',
+                'ppd-psversion': '',
+                'ppd-type': 'unknown',
+                'ppd-model-number': 0
+            }
 
         # CUPS sets the 'raw' model's ppd-make-and-model to 'Raw Queue'
         # which unfortunately then appears as manufacturer Raw and
@@ -650,7 +667,7 @@ class PPDs:
                     for each in list(mdls[model].keys ()):
                         fit[each] = self.FIT_EXACT
                         _debugprint ("%s: %s" % (fit[each], each))
-      
+
         if not fit and mdls:
             (s, ppds) = self._findBestMatchPPDs (mdls, mdl)
             if s != self.FIT_NONE:
